@@ -1,0 +1,51 @@
+import { useState } from "react";
+import { useFetch } from "./components/Hooks/useFetch";
+import NavBar from "./components/NavBar";
+import SearchForm from "./components/SearchForm";
+import Pagination from "./components/Pagination";
+import Job from "./components/Job";
+import Spinner from "./components/Spinner";
+import Alert from "./components/Alert";
+import Toggle from "./components/Toggle";
+
+function App() {
+  const [params, setparam] = useState({});
+  const [page, setPage] = useState(1);
+  const [toggle, settoggle] = useState(0);
+  const { jobs, loading, error, hasNextPage } = useFetch(params, page);
+
+  const handleparamchange = (e) => {
+    setPage(1);
+    let param = e.target.name;
+    let value = e.target.value;
+    setparam((prevparams) => {
+      return { ...prevparams, [param]: value };
+    });
+  };
+
+  return (
+    <div className={`${toggle === 1 ? " bg-gray-800" : " "}`}>
+      <NavBar />
+      <div className="flex justify-end mt-3 mr-4">
+        <Toggle toggle={toggle} settoggle={settoggle} />
+      </div>
+      <SearchForm
+        handleparamchange={handleparamchange}
+        params={params}
+        toggle={toggle}
+      />
+      <div className="px-2">
+        {loading && <Spinner />}
+        {error && <Alert reason={error} />}
+        {[...jobs].length === 0 && <Alert reason={false} />}
+        <Pagination page={page} setPage={setPage} hasNextPage={hasNextPage} />
+        {jobs &&
+          jobs.map((result) => {
+            return <Job key={result.id} result={result} toggle={toggle} />;
+          })}
+      </div>
+    </div>
+  );
+}
+
+export default App;

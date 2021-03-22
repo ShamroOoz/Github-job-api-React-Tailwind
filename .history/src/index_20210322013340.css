@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-style {
+  @apply w-3/5 outline-none border-0 focus:ring-2 ring-indigo-600 border-2 border-gray-300 rounded-lg placeholder-gray-500 placeholder-opacity-100;
+}
+.list-style {
+  @apply first: ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full
+    items-center justify-center leading-tight relative border border-solid
+    border-blue-500 bg-white text-blue-50;
+}
+
+.activelist-style {
+  @apply first:ml-0 text-xs font-semibold flex w-8 h-8 mx-1 p-0 rounded-full items-center justify-center leading-tight relative border border-solid border-blue-500 text-white bg-blue-500;
+}
